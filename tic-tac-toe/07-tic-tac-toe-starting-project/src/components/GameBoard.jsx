@@ -1,30 +1,13 @@
-import { useState } from "react"
-const initialGameBorad = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null]
-]
-
-
-export default function GameBoard({ playerTurn, playerTurnSymbol }) {
-    const [gameBoard, setGameBoard] = useState(initialGameBorad)
-
-    function handleTurnSelect(rowIndex, colIndex) {
-        setGameBoard((prevGameBoard) => {
-            const updatedBoard = [...prevGameBoard.map(innerArray => [...innerArray])]
-            updatedBoard[rowIndex][colIndex] = playerTurnSymbol
-            return updatedBoard
-        })
-
-        playerTurn()
-    }
-
+// import { useState } from "react"
+export default function GameBoard({ playerTurn, board }) {
     return (
         <ol id="game-board">
-            {gameBoard.map((row, rowIndex) => <li key={rowIndex}>
+            {board.map((row, rowIndex) => <li key={rowIndex}>
                 <ol>
                     {row.map((playerSymbol, colIndex) => <li key={colIndex}>
-                        <button onClick={() => handleTurnSelect(rowIndex, colIndex)}>{playerSymbol}</button>
+                        <button onClick={() => playerTurn(rowIndex, colIndex)} disabled={playerSymbol !== null}>
+                            {playerSymbol}
+                        </button>
                     </li>
                     )}
                 </ol>
